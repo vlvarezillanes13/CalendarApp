@@ -8,31 +8,33 @@ import { messages } from '../../helpers/calendar-messages-es';
 import { Navbar } from '../ui/Navbar';
 import { CalendarEvent } from './CalendarEvent';
 import { CalendarModal } from './CalendarModal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { uiOpenModal } from '../../actions/ui';
 import { eventSetActive } from '../../actions/events';
+import { AddNewFab } from '../ui/AddNewFab';
 
 
 moment.locale('es');
 const localizer = momentLocalizer(moment);
 
-const events = [{
-    title:'Cumpleaños del jefe',
-    start: moment().toDate(),
-    end: moment().add(2,'hours').toDate(),
-    bgcolor: '#fafafa',
-    user:{
-        _id:'123',
-        name:'Vicente'
-    }
-}]
+// const events = [{
+//     title:'Cumpleaños del jefe',
+//     start: moment().toDate(),
+//     end: moment().add(2,'hours').toDate(),
+//     bgcolor: '#fafafa',
+//     user:{
+//         _id:'123',
+//         name:'Vicente'
+//     }
+// }]
 
 
 export const CalendarScreen = () => {
 
-
     const dispatch = useDispatch();
     const [lastView, setlastView] = useState(localStorage.getItem('lasView') || 'month');
+
+    const { events } = useSelector(state => state.calendar);
 
     const onDoubleClick = () => {
         dispatch( uiOpenModal() );
@@ -87,6 +89,8 @@ export const CalendarScreen = () => {
                 }}
             />
 
+            
+            <AddNewFab />
 
             <CalendarModal />
         </div>
